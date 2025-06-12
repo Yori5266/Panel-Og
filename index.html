@@ -2,26 +2,84 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <title>neon panel by จิรายุ</title>
+  <title>เข้าสู่ระบบ - neon panel by จิรายุ</title>
   <style>
-    body {
-      margin: 0;
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
       font-family: 'Kanit', sans-serif;
-      background-color: #000000;
+      background-color: #000;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      position: relative;
+      color: #0ff;
+      user-select: none;
     }
-    .panel {
+    #login, #panel {
       background: #1a1a1a;
-      color: #ffffff;
-      padding: 30px;
       border-radius: 25px;
-      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
+      padding: 30px;
       width: 320px;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
       border: 1px solid #0ff;
+    }
+    #login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #login h2 {
+      margin-bottom: 20px;
+      text-shadow:
+        0 0 5px #0ff,
+        0 0 10px #0ff;
+    }
+    #login input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 15px;
+      border: 1px solid #0ff;
+      background: #262626;
+      color: #0ff;
+      font-size: 16px;
+      box-shadow:
+        0 0 10px #0ff;
+      outline: none;
+      text-align: center;
+    }
+    #login button {
+      margin-top: 20px;
+      background: transparent;
+      border: 2px solid #0ff;
+      padding: 10px 20px;
+      border-radius: 15px;
+      color: #0ff;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      box-shadow:
+        0 0 5px #0ff,
+        0 0 10px #0ff;
+      transition: 0.3s;
+    }
+    #login button:hover {
+      background: #0ff;
+      color: #000;
+    }
+    #errorMsg {
+      color: #f00;
+      margin-top: 15px;
+      font-weight: bold;
+      display: none;
+      text-align: center;
+      text-shadow: none;
+    }
+
+    /* โค้ด panel เดิม */
+    #panel {
+      display: none;
+      color: #0ff;
+      text-transform: lowercase;
     }
     .panel h1 {
       text-align: center;
@@ -32,7 +90,6 @@
         0 0 20px #0ff,
         0 0 40px #0ff;
       margin-bottom: 25px;
-      text-transform: lowercase;
     }
     label, select, p, span {
       display: block;
@@ -49,6 +106,7 @@
       border: 1px solid #0ff;
       border-radius: 8px;
       box-shadow: 0 0 10px #0ff;
+      width: 100%;
     }
     input[type="checkbox"] {
       accent-color: #0ff;
@@ -112,7 +170,17 @@
   </style>
 </head>
 <body>
-  <div class="panel">
+
+  <!-- หน้าใส่รหัสผ่าน -->
+  <div id="login">
+    <h2>กรุณาใส่รหัสผ่าน</h2>
+    <input type="password" id="passwordInput" placeholder="รหัสผ่าน" />
+    <button id="loginBtn">เข้าสู่ระบบ</button>
+    <div id="errorMsg">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</div>
+  </div>
+
+  <!-- หน้า panel จริง -->
+  <div id="panel" class="panel">
     <h1>neon panel by จิรายุ</h1>
     
     <label>ดูดหัว</label>
@@ -146,17 +214,36 @@
     <label><input type="checkbox" /> กันติดดำ</label>
     <label><input type="checkbox" /> ลบประวัติการรายงาน</label>
 
-    <!-- แทนที่ปุ่มเปิดใช้งานพาเนล ด้วยปุ่มเข้าเกมฟีฟาย -->
     <button class="btn-neon" id="startGameBtn">เข้าเกมฟีฟาย</button>
   </div>
 
   <div id="notification">พาแนลทำงาน✅</div>
 
   <script>
-    const btn = document.getElementById('startGameBtn');
+    const PASSWORD = "FarmPanel";
+    const loginDiv = document.getElementById('login');
+    const panelDiv = document.getElementById('panel');
+    const loginBtn = document.getElementById('loginBtn');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
     const notification = document.getElementById('notification');
 
-    btn.addEventListener('click', () => {
+    loginBtn.addEventListener('click', () => {
+      if (passwordInput.value === PASSWORD) {
+        // รหัสผ่านถูกต้อง
+        loginDiv.style.display = 'none';
+        panelDiv.style.display = 'block';
+        errorMsg.style.display = 'none';
+        passwordInput.value = '';
+      } else {
+        // รหัสผ่านผิด
+        errorMsg.style.display = 'block';
+      }
+    });
+
+    // ฟังก์ชันเข้าเกมฟีฟาย
+    const startGameBtn = document.getElementById('startGameBtn');
+    startGameBtn.addEventListener('click', () => {
       // แสดงข้อความแจ้งเตือน
       notification.classList.add('show');
       setTimeout(() => {
@@ -167,13 +254,18 @@
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
       if (isAndroid) {
-        // เปิดแอป Free Fire บน Android
         window.location.href = "intent://#Intent;package=com.dts.freefireth;scheme=freefire;end";
       } else if (isIOS) {
-        // เปิดแอป Free Fire บน iOS
         window.location.href = "freefire://";
       } else {
         alert("ระบบของคุณไม่รองรับการเปิดแอปอัตโนมัติ");
+      }
+    });
+
+    // กด Enter ในช่องพาสเวิร์ดก็เข้าสู่ระบบได้
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        loginBtn.click();
       }
     });
   </script>
