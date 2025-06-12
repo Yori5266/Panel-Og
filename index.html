@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>ZEUS PANEL DARK</title>
+  <meta charset="UTF-8" />
+  <title>neon panel by จิราย</title>
   <style>
     body {
       margin: 0;
@@ -18,32 +18,39 @@
       color: #ffffff;
       padding: 30px;
       border-radius: 25px;
-      box-shadow: 0 0 25px #ffffff;
+      box-shadow: 0 0 25px #0ff, 0 0 50px #0ff;
       width: 320px;
-      border: 1px solid #ffffff;
+      border: 1px solid #0ff;
     }
     .panel h1 {
       text-align: center;
-      color: #ffffff;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      color: #0ff;
+      text-shadow:
+        0 0 5px #0ff,
+        0 0 10px #0ff,
+        0 0 20px #0ff,
+        0 0 40px #0ff;
       margin-bottom: 25px;
+      text-transform: lowercase;
     }
     label, select, p, span {
       display: block;
       margin: 10px 0 5px;
-      color: #ffffff;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      color: #0ff;
+      text-shadow:
+        0 0 5px #0ff,
+        0 0 10px #0ff;
     }
     select {
       padding: 5px;
       background: #262626;
-      color: #fff;
-      border: 1px solid #ffffff;
+      color: #0ff;
+      border: 1px solid #0ff;
       border-radius: 8px;
-      box-shadow: 0 0 10px #ffffff;
+      box-shadow: 0 0 10px #0ff;
     }
     input[type="checkbox"] {
-      accent-color: #ffffff;
+      accent-color: #0ff;
       width: 18px;
       height: 18px;
     }
@@ -52,18 +59,62 @@
       align-items: center;
       margin: 5px 0;
     }
-    .switch input {
-      margin-left: auto;
+    .switch span {
+      flex: 1;
     }
-    .panel p {
-      margin-top: 15px;
-      font-weight: bold;
+    /* ปรับสไตล์สวิตช์เปิดปิดแบบ neon */
+    .switch-toggle {
+      position: relative;
+      width: 50px;
+      height: 24px;
+    }
+    .switch-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #333;
+      border-radius: 24px;
+      box-shadow:
+        0 0 5px #0ff,
+        inset 0 0 10px #0ff;
+      transition: 0.4s;
+      border: 1px solid #0ff;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #0ff;
+      border-radius: 50%;
+      box-shadow:
+        0 0 5px #0ff,
+        0 0 10px #0ff;
+      transition: 0.4s;
+    }
+    input:checked + .slider {
+      background-color: #0ff;
+      box-shadow:
+        0 0 20px #0ff,
+        inset 0 0 20px #0ff;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+      background-color: #000;
+      box-shadow: none;
     }
   </style>
 </head>
 <body>
   <div class="panel">
-    <h1>ZEUS PANEL DARK</h1>
+    <h1>neon panel by จิราย</h1>
     
     <label>ดูดหัว</label>
     <select>
@@ -75,30 +126,33 @@
 
     <div class="switch">
       <span>ช่วยลาก 88%</span>
-      <input type="checkbox">
+      <input type="checkbox" />
     </div>
     <div class="switch">
       <span>DPI 4990</span>
-      <input type="checkbox">
+      <input type="checkbox" />
     </div>
     <div class="switch">
       <span>FPS 140</span>
-      <input type="checkbox">
+      <input type="checkbox" />
     </div>
     <div class="switch">
       <span>144 Hz</span>
-      <input type="checkbox">
+      <input type="checkbox" />
     </div>
 
     <p>จอสมูท</p>
-    <label><input type="checkbox"> กันรายงาน</label>
-    <label><input type="checkbox"> กันแบน</label>
-    <label><input type="checkbox"> กันติดดำ</label>
-    <label><input type="checkbox"> ลบประวัติการรายงาน</label>
+    <label><input type="checkbox" /> กันรายงาน</label>
+    <label><input type="checkbox" /> กันแบน</label>
+    <label><input type="checkbox" /> กันติดดำ</label>
+    <label><input type="checkbox" /> ลบประวัติการรายงาน</label>
 
     <div class="switch">
       <span>เปิดใช้งานพาเนล</span>
-      <input type="checkbox">
+      <label class="switch-toggle">
+        <input type="checkbox" />
+        <span class="slider"></span>
+      </label>
     </div>
   </div>
 </body>
